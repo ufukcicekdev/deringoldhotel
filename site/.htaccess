@@ -1,1 +1,4 @@
-DirectoryIndex index.html
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_URI} !^/index\.html$
+RewriteRule ^(.*)$ /index.html [L]
