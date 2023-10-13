@@ -7,7 +7,7 @@ Disallow:
 User-agent: Bingbot
 Disallow:
 
-Sitemap: https://www.example.com/sitemap.xml
+Sitemap: https://deringoldhotel.com/sitemap.xml
 
 Allow: /iletisim.html
 Allow: /odalar.html
