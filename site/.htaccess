@@ -1,7 +1,24 @@
- RewriteEngine on
- #redirect /index.html to /file
- RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
- RewriteRule ^ /%1 [NE,L,R]
- # now we will internally map /file to/ file.html
- RewriteCond %{REQUEST_FILENAME}.html -f
- RewriteRule ^(.*)/?$ /$1.html  [L]
+# This tag loads the rewrite module
+<IfModule mod_rewrite.c>
+# enable the rewrite engine
+    RewriteEngine On
+# Set your root directory
+    RewriteBase /
+
+# Remove the .html extension
+    RewriteCond %{THE_REQUEST} ^GET\ (.*)\.html\ HTTP
+    RewriteRule (.*)\.html$ $1 [R=301]
+
+# Remove index and reference the directory
+    RewriteRule (.*)/index$ $1/ [R=301]
+
+# Remove trailing slash if not a directory
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} /$
+    RewriteRule (.*)/ $1 [R=301]
+
+# Forward request to html file, **but don't redirect (bot friendly)**
+    RewriteCond %{REQUEST_FILENAME}.html -f
+    RewriteCond %{REQUEST_URI} !/$
+    RewriteRule (.*) $1\.html [L]
+    </IfModule>
